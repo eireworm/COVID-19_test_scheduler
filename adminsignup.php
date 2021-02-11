@@ -27,7 +27,7 @@ if (isset($_POST['name']) && isset($_POST['email']) && isset($_POST['pswd']))
   }
   mysqli_close($con);
 
-  header("Location: ./login.php"); 
+  header("Location: ./adminlogin.php"); 
   exit();
 }
 ?>
@@ -132,7 +132,7 @@ if (isset($_POST['name']) && isset($_POST['email']) && isset($_POST['pswd']))
     
         <button type="submit" id="signup_bttn"><strong>Sign Up</strong></button>
         <br />
-        <p>Already have an account? <a href="login.php">Log in here</a>.</p>
+        <p>Already have an account? <a href="./adminlogin.php">Log in here</a>.</p>
       </form>
 </body>
 </html>
