@@ -1,12 +1,39 @@
 <?php 
 session_start(); 
 
-// if not logged in or logging out
+// handle button click events and users that are not logged in
 if(isset($_POST['logout_bttn']) || !isset($_SESSION['patientName'])) 
 {
     session_destroy();
     header("Location: ./login.php"); 
     exit();
+}
+else if (isset($_POST['scheduler_start_bttn']))
+{
+    $_SESSION['current_question'] = 0;
+}
+else if (isset($_POST['scheduler_next_bttn']))
+{
+    $_SESSION['current_question'] += 1;
+
+    // handle q1 form data
+    if(isset($_POST['email']) && $_POST['email'] != "")
+    {
+        echo '<br><br>email = ' . $_POST['email'] . '<br><br>';
+    }
+
+    if(isset($_POST['phone-number']) && $_POST['phone-number'] != "")
+    {
+        echo '<br><br>phone-number = ' . $_POST['phone-number'] . '<br><br>';
+    }
+}
+else if (isset($_POST['scheduler_back_bttn']))
+{
+    $_SESSION['current_question'] -= 1;
+}
+else 
+{
+    $_SESSION['current_question'] = -1;
 }
 ?>
 <!DOCTYPE html>
@@ -89,11 +116,28 @@ if(isset($_POST['logout_bttn']) || !isset($_SESSION['patientName']))
             display: inline-block;
             float: right;
         }
+
+        .input_box_style 
+        {
+            margin-top: 5px;
+            border: 1px solid black;
+            height: 2.5rem;
+            width: 200px;
+            color: grey;
+            font-size: 1.2rem;
+            font-weight: bold;
+            padding: 0 1rem;
+        }
+
+        .input_box_style:focus 
+        {
+            outline-color: #715aa1;
+        }
     </style>
 </head>
 <body>
     <article id="nav_panel">
-        <br>
+        <img src="covid_img.png" height="75" width="75" style="margin: 15px calc(50% - 38px);"/>
         <p>COVID-19 PCR Test Scheduler</p>
         <br>
         <br>
@@ -101,27 +145,41 @@ if(isset($_POST['logout_bttn']) || !isset($_SESSION['patientName']))
         <br>
         <br>
         <p>&#8702; Schedule a test</p>
-        <p style="position: absolute; bottom: 0; margin-bottom: 15px; left: 15px; font-weight: normal;">Copyright &copy; Anthony Byrne</p>
+        <br>
+        <br>
+        <p>&#8702; View test results</p>
+        <p style="position: absolute; bottom: 0; margin-bottom: 15px; left: 15px; font-weight: normal;">Copr. &copy; 2021 <a href="https://eireworm.github.io">Anthony Byrne</a></p>
     </article>
 
     <article id="display_panel">
-        <?php 
-        if (isset($_GET['p']))
-        {
-            if($_GET['p'] == 'q1')
+        <div>
+            <?php echo "<h1 id=\"title\">$_SESSION[patientName] - Dashboard</h1>" ?>
+            <form method="post" id="logout_form"> 
+                <button type="submit" class="bttn" name="logout_bttn"><strong>Log out</strong></button>
+            </form>
+            <br>
+            <br>
+
+            <hr>
+            
+            <br>
+            <br>
+
+            <?php 
+            if ($_SESSION['current_question'] === 0)
+            {
+                include './q.php';
+            } 
+            else if($_SESSION['current_question'] === 1)
             {
                 include './q1.php'; 
-            } 
-            else
+            }
+            else 
             {
                 include './main_display_panel.php';
             }
-        }
-        else 
-        {
-            include './main_display_panel.php';
-        }
-        ?>
+            ?>
+        </div>
     </article>
     
 </body>
