@@ -2,37 +2,32 @@
 
 $ini_array = parse_ini_file('C:\\config.ini');
 
-if (isset($_POST['name']) && isset($_POST['email']) && 
-isset($_POST['phone-number']) && isset($_POST['pswd'])) 
+if (isset($_POST['name']) && isset($_POST['email']) && isset($_POST['pswd'])) 
 {
   // hash password with max size of 64 characters
-  $hash = password_hash(substr($_POST['pswd'], 0, 64), PASSWORD_DEFAULT);
+  $hashed_pswd = password_hash(substr($_POST['pswd'], 0, 64), PASSWORD_DEFAULT);
 
-  // Sanitise and encrypt patient name and email address
+  // Sanitise and encrypt medical administrator email address
   $ini_array = parse_ini_file('C:\\config.ini');
   $cipher = $ini_array["cipher"];
   $key = $ini_array["key"];
   $iv = random_bytes(16);
-
-  include 'db.inc.php'; 
-
+  include '../db.inc.php'; 
   $escaped_patient_name = $con -> real_escape_string($_POST['name']);
   $encrypted_patient_name = openssl_encrypt($escaped_patient_name, $cipher, $key, OPENSSL_RAW_DATA, $iv);
 
   $escaped_email = $con -> real_escape_string($_POST['email']);
-  $encrypted_email = openssl_encrypt($escaped_email, $cipher, $key, OPENSSL_RAW_DATA, $iv);
 
-  // create and execute sql query to insert new patient
-  $sql = 'INSERT INTO `Patients` (`name`, `email`, `phoneNumber`, `password`, `testSlotID`, `iv`)
-  VALUES ("' . bin2hex($encrypted_patient_name) . '", "' . bin2hex($encrypted_email) . '", "' . $_POST['phone-number'] . '", 
-  "' . bin2hex($hash) . '", NULL, "' . bin2hex($iv) . '");';
+  // create and execute sql query to insert new medical administrator
+  $sql = 'INSERT INTO `administrators` (`name`, `email`, `password`, `iv`)
+  VALUES ("' . bin2hex($encrypted_patient_name) . '", "' . $escaped_email . '", "' . bin2hex($hashed_pswd) . '", "' . bin2hex($iv) . '");';
 
   if (!$con->query($sql) === TRUE) {
-    die('Error creating table: ' . $con->error);
+    die('<br>Error creating table: ' . $con->error);
   }
   mysqli_close($con);
 
-  header("Location: ./login.php"); 
+  header("Location: ./adminlogin.php"); 
   exit();
 }
 ?>
@@ -125,15 +120,6 @@ isset($_POST['phone-number']) && isset($_POST['pswd']))
 
         <br />
         <br />
-        
-        <label for="phone-number"><strong>Phone number</strong></label>
-        <br />
-        <input type="tel" class="input_box_style" name="phone-number" pattern="[0-9]{10}" required>
-        <br />
-        <small>Format: 0831011390</small>
-
-        <br />
-        <br />
     
         <label for="psw"><strong>Password</strong></label>
         <br />
@@ -146,7 +132,7 @@ isset($_POST['phone-number']) && isset($_POST['pswd']))
     
         <button type="submit" id="signup_bttn"><strong>Sign Up</strong></button>
         <br />
-        <p>Already have an account? <a href="login.php">Log in here</a>.</p>
+        <p>Already have an account? <a href="./adminlogin.php">Log in here</a>.</p>
       </form>
 </body>
 </html>

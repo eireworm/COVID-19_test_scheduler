@@ -1,32 +1,34 @@
 <?php 
-if (isset($_POST['email']) && isset($_POST['pswd'])) 
+if (isset($_POST['phone-number']) && isset($_POST['pswd'])) 
 {
     $ini_array = parse_ini_file('C:\\config.ini');
     $cipher = $ini_array["cipher"];
     $key = $ini_array["key"];
 
-    // create and execute sql query to search for admin record
-    include 'db.inc.php'; 
-    $email = $con -> real_escape_string(substr($_POST['email'], 0, 64));
-    $sql = "SELECT `adminID`, `name`, `password`, `iv` FROM `administrators` WHERE email=\"$email\";";
+    // create and execute sql query to search for patient record
+    include '../db.inc.php'; 
+    $phone_num = $con -> real_escape_string(substr($_POST['phone-number'], 0, 64));
+    $sql = 'SELECT `patientID`, `name`, `email`, `password`, `iv` FROM `Patients` WHERE phoneNumber="' . $phone_num . '";';
     $result = $con->query($sql);
     mysqli_close($con);
     
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
-        $adminID = $row['adminID'];
-        $adminName = hex2bin($row['name']);
-        $adminPassword = hex2bin($row['password']);
-        $adminIV = hex2bin($row['iv']);
+        $patientID = $row['patientID'];
+        $patientName = hex2bin($row['name']);
+        $patientEmail = hex2bin($row['email']);
+        $patientPassword = hex2bin($row['password']);
+        $patientIV = hex2bin($row['iv']);
         
-        if (password_verify($_POST['pswd'], $adminPassword))
+        if (password_verify($_POST['pswd'], $patientPassword))
         {
             echo "logged in <br>";
             
             session_start();
-            $_SESSION['adminName'] = openssl_decrypt($adminName, $cipher, $key, OPENSSL_RAW_DATA, $adminIV);
+            $_SESSION['patientName'] = openssl_decrypt($patientName, $cipher, $key, OPENSSL_RAW_DATA, $patientIV);
+            $_SESSION['patientEmail'] = openssl_decrypt($patientEmail, $cipher, $key, OPENSSL_RAW_DATA, $patientIV);
             
-            header("Location: ./admindashboard.php"); 
+            header("Location: ./dashboard.php"); 
             exit();
         }
         else 
@@ -115,9 +117,11 @@ if (isset($_POST['email']) && isset($_POST['pswd']))
 
         <br />
         
-        <label for="email"><strong>Email</strong></label>
+        <label for="phone-number"><strong>Phone number</strong></label>
         <br />
-        <input type="email" class="input_box_style" name="email" required>
+        <input type="tel" class="input_box_style" name="phone-number" pattern="[0-9]{10}" required>
+        <br />
+        <small>Format: 0831011390</small>
 
         <br />
         <br />
@@ -131,7 +135,7 @@ if (isset($_POST['email']) && isset($_POST['pswd']))
     
         <button type="submit" id="login_bttn"><strong>Log in</strong></button>
         <br />
-        <p>No account? <a href="./adminsignup.php">Sign up here</a>.</p>
+        <p>No account? <a href="signup.php">Sign up here</a>.</p>
       </form>
 </body>
 </html>
