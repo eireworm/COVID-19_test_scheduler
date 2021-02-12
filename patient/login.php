@@ -25,8 +25,11 @@ if (isset($_POST['phone-number']) && isset($_POST['pswd']))
             echo "logged in <br>";
             
             session_start();
+            $_SESSION['patientID'] = $patientID;
             $_SESSION['patientName'] = openssl_decrypt($patientName, $cipher, $key, OPENSSL_RAW_DATA, $patientIV);
+            $_SESSION['patientPhone'] = $phone_num;
             $_SESSION['patientEmail'] = openssl_decrypt($patientEmail, $cipher, $key, OPENSSL_RAW_DATA, $patientIV);
+            $_SESSION['patientIV'] = $patientIV;
             
             header("Location: ./dashboard.php"); 
             exit();

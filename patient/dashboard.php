@@ -17,14 +17,43 @@ else if (isset($_POST['scheduler_next_bttn']))
     $_SESSION['current_question'] += 1;
 
     // handle q1 form data
+    $ini_array = parse_ini_file('C:\\config.ini');
+    $cipher = $ini_array["cipher"];
+    $key = $ini_array["key"];
+
     if(isset($_POST['email']) && $_POST['email'] != "")
     {
-        echo '<br><br>email = ' . $_POST['email'] . '<br><br>';
+        include '../db.inc.php'; 
+
+        $escaped_email = $con -> real_escape_string($_POST['email']);
+        $encrypted_email = openssl_encrypt($escaped_email, $cipher, $key, OPENSSL_RAW_DATA, $_SESSION['patientIV']);
+
+        // create and execute sql query to insert new patient
+        $sql = 'UPDATE `Patients` SET `email` = "' . bin2hex($encrypted_email) . '" WHERE patientID = ' . $_SESSION['patientID'] . ';';
+
+        if (!$con->query($sql) === TRUE) {
+            die('Error updating email: ' . $con->error);
+        }
+        mysqli_close($con);
+
+        $_SESSION['patientEmail'] = $escaped_email;
     }
 
     if(isset($_POST['phone-number']) && $_POST['phone-number'] != "")
     {
-        echo '<br><br>phone-number = ' . $_POST['phone-number'] . '<br><br>';
+        include '../db.inc.php'; 
+
+        $escaped_phone = $con -> real_escape_string($_POST['phone-number']);
+
+        // create and execute sql query to insert new patient
+        $sql = 'UPDATE `Patients` SET `phoneNumber` = "' . $escaped_phone . '" WHERE patientID = ' . $_SESSION['patientID'] . ';';
+
+        if (!$con->query($sql) === TRUE) {
+            die('Error updating phone: ' . $con->error);
+        }
+        mysqli_close($con);
+
+        $_SESSION['patientPhone'] = $_POST['phone-number'];
     }
 }
 else if (isset($_POST['scheduler_back_bttn']))
