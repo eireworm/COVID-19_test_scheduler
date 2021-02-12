@@ -16,7 +16,7 @@ else if (isset($_POST['scheduler_next_bttn']))
 {
     $_SESSION['current_question'] += 1;
 
-    // handle q1 form data
+    // handle q1 update form data
     $ini_array = parse_ini_file('C:\\config.ini');
     $cipher = $ini_array["cipher"];
     $key = $ini_array["key"];
@@ -54,6 +54,31 @@ else if (isset($_POST['scheduler_next_bttn']))
         mysqli_close($con);
 
         $_SESSION['patientPhone'] = $_POST['phone-number'];
+    }
+
+    // save q2 response
+    if(isset($_POST['q2_radio']))
+    {
+        $_SESSION['q2_radio'] = $_POST['q2_radio'];
+    }
+
+    // save q3 response
+    if(isset($_POST['q3_radio']))
+    {
+        $_SESSION['q3_radio'] = $_POST['q3_radio'];
+    }
+
+    // This will be migrated to another file to display results
+    if(isset($_SESSION['q2_radio']) && isset($_POST['q3_radio']))
+    {
+        if($_SESSION['q2_radio'] || $_POST['q3_radio'])
+        {
+            echo "You get a test";
+        }
+        else
+        {
+            echo "You do not need a test";
+        }
     }
 }
 else if (isset($_POST['scheduler_back_bttn']))
@@ -195,16 +220,22 @@ else
             <br>
 
             <?php 
-            if ($_SESSION['current_question'] === 0)
+            // switch case decides what panel to print to the document
+            switch ($_SESSION['current_question'])
             {
-                include './q.php';
-            } 
-            else if($_SESSION['current_question'] === 1)
-            {
-                include './q1.php'; 
-            }
-            else 
-            {
+                case 0:
+                    include './q.php';
+                    break;
+                case 1:
+                    include './q1.php'; 
+                    break;
+                case 2:
+                    include './q2.php'; 
+                    break;
+                case 3:
+                    include './q3.php'; 
+                    break;
+                default:
                 include './main_display_panel.php';
             }
             ?>
