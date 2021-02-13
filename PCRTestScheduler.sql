@@ -40,37 +40,53 @@ CREATE TABLE IF NOT EXISTS `Administrators` (
 
 CREATE TABLE IF NOT EXISTS `TestReservations` (
   `Date` DATE,
-  `540` BOOLEAN,
-  `555` BOOLEAN,
-  `570` BOOLEAN,
-  `585` BOOLEAN,
-  `600` BOOLEAN,
-  `615` BOOLEAN,
-  `630` BOOLEAN,
-  `645` BOOLEAN,
-  `660` BOOLEAN,
-  `675` BOOLEAN,
-  `690` BOOLEAN,
-  `705` BOOLEAN,
-  `720` BOOLEAN,
-  `735` BOOLEAN,
-  `750` BOOLEAN,
-  `765` BOOLEAN,
-  `780` BOOLEAN,
-  `795` BOOLEAN,
-  `810` BOOLEAN,
-  `825` BOOLEAN,
-  `840` BOOLEAN,
-  `855` BOOLEAN,
-  `870` BOOLEAN,
-  `885` BOOLEAN,
-  `900` BOOLEAN,
-  `915` BOOLEAN,
-  `930` BOOLEAN,
-  `945` BOOLEAN,
-  `960` BOOLEAN,
-  `975` BOOLEAN,
-  `990` BOOLEAN,
-  `1005` BOOLEAN,
-  PRIMARY KEY (`Date`)
+  `slotsRemaining` BOOLEAN,
+  `nextSlot` INT(5)
 );
+
+INSERT INTO `TestReservations` VALUES ("2021-02-14", 1, 540);
+INSERT INTO `TestReservations` VALUES ("2021-02-15", 1, 540);
+INSERT INTO `TestReservations` VALUES ("2021-02-16", 1, 540);
+INSERT INTO `TestReservations` VALUES ("2021-02-17", 1, 540);
+INSERT INTO `TestReservations` VALUES ("2021-02-18", 1, 540);
+INSERT INTO `TestReservations` VALUES ("2021-02-19", 1, 540);
+INSERT INTO `TestReservations` VALUES ("2021-02-20", 1, 540);
+INSERT INTO `TestReservations` VALUES ("2021-02-21", 1, 540);
+INSERT INTO `TestReservations` VALUES ("2021-02-22", 1, 540);
+INSERT INTO `TestReservations` VALUES ("2021-02-23", 1, 540);
+INSERT INTO `TestReservations` VALUES ("2021-02-24", 1, 540);
+INSERT INTO `TestReservations` VALUES ("2021-02-25", 1, 540);
+INSERT INTO `TestReservations` VALUES ("2021-02-26", 1, 540);
+INSERT INTO `TestReservations` VALUES ("2021-02-27", 1, 540);
+INSERT INTO `TestReservations` VALUES ("2021-02-28", 1, 540);
+INSERT INTO `TestReservations` VALUES ("2021-03-01", 1, 540);
+INSERT INTO `TestReservations` VALUES ("2021-03-02", 1, 540);
+INSERT INTO `TestReservations` VALUES ("2021-03-03", 1, 540);
+INSERT INTO `TestReservations` VALUES ("2021-03-04", 1, 540);
+INSERT INTO `TestReservations` VALUES ("2021-03-05", 1, 540);
+INSERT INTO `TestReservations` VALUES ("2021-03-06", 1, 540);
+INSERT INTO `TestReservations` VALUES ("2021-03-07", 1, 540);
+INSERT INTO `TestReservations` VALUES ("2021-03-08", 1, 540);
+INSERT INTO `TestReservations` VALUES ("2021-03-09", 1, 540);
+INSERT INTO `TestReservations` VALUES ("2021-03-10", 1, 540);
+INSERT INTO `TestReservations` VALUES ("2021-03-11", 1, 540);
+INSERT INTO `TestReservations` VALUES ("2021-03-12", 1, 540);
+INSERT INTO `TestReservations` VALUES ("2021-03-13", 1, 540);
+INSERT INTO `TestReservations` VALUES ("2021-03-14", 1, 540);
+INSERT INTO `TestReservations` VALUES ("2021-03-15", 1, 540);
+INSERT INTO `TestReservations` VALUES ("2021-03-16", 1, 540);
+INSERT INTO `TestReservations` VALUES ("2021-03-17", 1, 540);
+INSERT INTO `TestReservations` VALUES ("2021-03-18", 1, 540);
+INSERT INTO `TestReservations` VALUES ("2021-03-19", 1, 540);
+INSERT INTO `TestReservations` VALUES ("2021-03-20", 1, 540);
+INSERT INTO `TestReservations` VALUES ("2021-03-21", 1, 540);
+INSERT INTO `TestReservations` VALUES ("2021-03-22", 1, 540);
+INSERT INTO `TestReservations` VALUES ("2021-03-23", 1, 540);
+INSERT INTO `TestReservations` VALUES ("2021-03-24", 1, 540);
+INSERT INTO `TestReservations` VALUES ("2021-03-25", 1, 540);
+INSERT INTO `TestReservations` VALUES ("2021-03-26", 1, 540);
+INSERT INTO `TestReservations` VALUES ("2021-03-27", 1, 540);
+INSERT INTO `TestReservations` VALUES ("2021-03-28", 1, 540);
+INSERT INTO `TestReservations` VALUES ("2021-03-29", 1, 540);
+INSERT INTO `TestReservations` VALUES ("2021-03-30", 1, 540);
+INSERT INTO `TestReservations` VALUES ("2021-03-31", 1, 540);

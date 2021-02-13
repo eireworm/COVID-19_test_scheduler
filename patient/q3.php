@@ -10,5 +10,5 @@
     <br>
     <br>
     <button type="submit" class="bttn" name="scheduler_back_bttn"><strong>Back</strong></button>
-    <button type="submit" class="bttn" style="margin-left:20px;" name="scheduler_next_bttn"><strong>Next</strong></button>
+    <button type="submit" class="bttn" style="margin-left:20px;" name="scheduler_finish_bttn"><strong>Finish</strong></button>
 </form>
