@@ -46,15 +46,26 @@ function addDateForTestRegistrations() {
     $sql = "UPDATE TestReservations SET nextSlot=$nextSlot, slotsRemaining=$slotsRemaining WHERE Date=\"$testSlotDate\";";
 
     if (!$con->query($sql) === TRUE) {
-        die('Error creating new date: ' . $con->error);
+        die('Error updating testreservations: ' . $con->error);
     }
-    /*
-    $sql = "INSERT INTO `TestReservations` VALUES (\"2021-02-14\", 1, 540);";
     
-
+    //update ini file
+    $ini_array = parse_ini_file('C:\\config.ini');
+    $testSlotID = (int) $ini_array["testSlotID"];
+    $testSlotID += 1;
+    $pattern = '/testSlotID=[0-9]*$/i';
+    $replacement = "testSlotID=" . $testSlotID;
+    $contents = file_get_contents('C:\\config.ini');
+    $newTXT = preg_replace($pattern, $replacement, $contents);
+    $phpfiletoedit = fopen('C:\\config.ini', "w");
+    fwrite($phpfiletoedit, $newTXT);
+    
+    // Insert new reservation into testreservations table
+    $nextSlot -= 15;
+    $sql = "INSERT INTO testslot (testSlotID, Date, Time) VALUES ($testSlotID, \"$testSlotDate\", $nextSlot);";
     if (!$con->query($sql) === TRUE) {
-        die('Error creating new date: ' . $con->error);
-    }*/
+        die('Error inserting new test slot: ' . $con->error);
+    }
     mysqli_close($con);
 }
 
