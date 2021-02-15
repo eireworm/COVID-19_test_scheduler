@@ -73,7 +73,7 @@ function addDateForTestRegistrations() {
     $iv = random_bytes(16);
 
     $sql = "INSERT INTO PastTestResults (testSlotID, patientID, result, adminID, iv) 
-    VALUES ($testSlotID, $_SESSION[patientID], NULL, NULL, \"" . bin2hex($iv) . "\");";
+    VALUES ($testSlotID, $_SESSION[patientID], NULL, 'X', \"" . bin2hex($iv) . "\");";
     if (!$con->query($sql) === TRUE) {
         die('Error inserting new pate test reservation: ' . $con->error);
     }

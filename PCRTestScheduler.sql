@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS `TestSlot` (
 CREATE TABLE IF NOT EXISTS `PastTestResults` (
   `testSlotID` INT NOT NULL,
   `patientID` INT NOT NULL,
-  `result` BOOLEAN,
+  `result` VARCHAR(1),
   `adminID` INT,
   `iv` VARCHAR(32),
   PRIMARY KEY (`patientID`, `testSlotID`)
