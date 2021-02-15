@@ -66,6 +66,18 @@ function addDateForTestRegistrations() {
     if (!$con->query($sql) === TRUE) {
         die('Error inserting new test slot: ' . $con->error);
     }
+
+    // Insert new past test reservation table entry
+    $cipher = $ini_array["cipher"];
+    $key = $ini_array["key"];
+    $iv = random_bytes(16);
+
+    $sql = "INSERT INTO PastTestResults (testSlotID, patientID, result, adminID, iv) 
+    VALUES ($testSlotID, $_SESSION[patientID], NULL, NULL, \"" . bin2hex($iv) . "\");";
+    if (!$con->query($sql) === TRUE) {
+        die('Error inserting new pate test reservation: ' . $con->error);
+    }
+
     mysqli_close($con);
 }
 
