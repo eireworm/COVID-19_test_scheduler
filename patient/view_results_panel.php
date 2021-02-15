@@ -48,15 +48,21 @@ if ($result->num_rows > 0)
                 //print table rows
                 if ($testResults == 'P')
                 {
-                    echo "<tr><td class='tdstyle'>$testslotDate</td><td class='tdstyle'>$testslotTime</td><td class='tdstyle' style='color:red;'><strong>COVID detected</strong></td></tr>";
+                    echo "<tr><td class='tdstyle'>$testslotDate</td>
+                    <td class='tdstyle'>$testslotTime</td>
+                    <td class='tdstyle' style='color:red;'><strong>COVID detected</strong></td></tr>";
                 }
                 else if ($testResults == 'N')
                 {
-                    echo "<tr><td class='tdstyle'>$testslotDate</td><td class='tdstyle'>$testslotTime</td><td class='tdstyle' style='color:green;'><strong>COVID Not detected</strong></td></tr>";
+                    echo "<tr><td class='tdstyle'>$testslotDate</td>
+                    <td class='tdstyle'>$testslotTime</td>
+                    <td class='tdstyle' style='color:green;'><strong>COVID Not detected</strong></td></tr>";
                 }
                 else
                 {
-                    echo "<tr><td class='tdstyle'>$testslotDate</td><td class='tdstyle'>$testslotTime</td><td class='tdstyle' class='tdstyle'><em>PENDING</em></td></tr>";
+                    echo "<tr><td class='tdstyle'>$testslotDate</td>
+                    <td class='tdstyle'>$testslotTime</td>
+                    <td class='tdstyle' class='tdstyle'><em>PENDING</em></td></tr>";
                 }
             }
         } 

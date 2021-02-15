@@ -26,7 +26,7 @@ if (isset($_POST['email']) && isset($_POST['pswd']))
             session_start();
             $_SESSION['adminName'] = openssl_decrypt($adminName, $cipher, $key, OPENSSL_RAW_DATA, $adminIV);
             
-            header("Location: ./admindashboard.php"); 
+            header("Location: ./dashboard.php"); 
             exit();
         }
         else 
@@ -131,7 +131,7 @@ if (isset($_POST['email']) && isset($_POST['pswd']))
     
         <button type="submit" id="login_bttn"><strong>Log in</strong></button>
         <br />
-        <p>No account? <a href="./adminsignup.php">Sign up here</a>.</p>
+        <p>No account? <a href="./signup.php">Sign up here</a>.</p>
       </form>
 </body>
 </html>

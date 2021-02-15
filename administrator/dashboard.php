@@ -5,7 +5,7 @@ session_start();
 if(isset($_POST['logout_bttn']) || !isset($_SESSION['adminName'])) 
 {
     session_destroy();
-    header("Location: ./adminlogin.php"); 
+    header("Location: ./login.php"); 
     exit();
 }
 ?>
