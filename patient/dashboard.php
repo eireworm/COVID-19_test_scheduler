@@ -80,6 +80,10 @@ else if (isset($_POST['scheduler_finish_bttn']))
 
     $_SESSION['current_question'] += 1;
 }
+else if (isset($_POST['nav_view_results'])) 
+{
+    $_SESSION['current_question'] = 5;
+}
 else 
 {
     $_SESSION['current_question'] = -1;
@@ -182,6 +186,15 @@ else
             {
                 outline-color: #715aa1;
             }
+
+            .nav_bttn
+            {
+                color: white;
+                background: none;
+                border: none;
+                margin-left: 50px;
+                cursor: pointer;
+            }
         </style>
     </head>
     <body>
@@ -190,13 +203,25 @@ else
             <p>COVID-19 PCR Test Scheduler</p>
             <br>
             <br>
-            <p>&#8702; Dashboard</p>
+            <p>
+                <form method="post"> 
+                    <button type="submit" class="nav_bttn" name="nav_main_dashboard"><strong>&#8702; Dashboard</strong></button>
+                </form>
+            </p>
             <br>
             <br>
-            <p>&#8702; Schedule a test</p>
+            <p>
+                <form method="post"> 
+                    <button type="submit" class="nav_bttn" name="scheduler_start_bttn"><strong>&#8702; Schedule a test</strong></button>
+                </form>
+            </p>
             <br>
             <br>
-            <p>&#8702; View test results</p>
+            <p> 
+                <form method="post"> 
+                    <button type="submit" class="nav_bttn" name="nav_view_results"><strong>&#8702; View test results</strong></button>
+                </form>
+            </p>
             <p style="position: absolute; bottom: 0; margin-bottom: 15px; left: 15px; font-weight: normal;">Copr. &copy; 2021 <a href="https://eireworm.github.io">Anthony Byrne</a></p>
         </article>
 
@@ -233,8 +258,11 @@ else
                     case 4:
                         include './q4.php'; 
                         break;
+                    case 5:
+                        include './view_results_panel.php'; 
+                        break;
                     default:
-                    include './main_display_panel.php';
+                        include './main_display_panel.php';
                 }
                 ?>
             </div>
