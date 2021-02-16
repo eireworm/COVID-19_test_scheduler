@@ -102,7 +102,7 @@ if (isset($_POST['name']) && isset($_POST['email']) && isset($_POST['pswd']))
 </head>
 <body>
     <form method="post">
-        <h1>Sign Up</h1>
+        <h1>Sign Up - Admin</h1>
         <hr>
 
         <br />

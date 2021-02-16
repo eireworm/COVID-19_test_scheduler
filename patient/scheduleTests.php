@@ -53,6 +53,7 @@ function addDateForTestRegistrations() {
     $ini_array = parse_ini_file('C:\\config.ini');
     $testSlotID = (int) $ini_array["testSlotID"];
     $testSlotID += 1;
+    $_SESSION["latestTestSlotID"] = $testSlotID; 
     $pattern = '/testSlotID=[0-9]*$/i';
     $replacement = "testSlotID=" . $testSlotID;
     $contents = file_get_contents('C:\\config.ini');
@@ -75,13 +76,20 @@ function addDateForTestRegistrations() {
     $sql = "INSERT INTO PastTestResults (testSlotID, patientID, result, adminID, iv) 
     VALUES ($testSlotID, $_SESSION[patientID], NULL, 'X', \"" . bin2hex($iv) . "\");";
     if (!$con->query($sql) === TRUE) {
-        die('Error inserting new pate test reservation: ' . $con->error);
+        die('Error inserting new patient test reservation: ' . $con->error);
+    }
+
+    // Update patient record with test id
+    $sql = "UPDATE Patients SET testSlotID=$testSlotID WHERE patientID=$_SESSION[patientID];";
+    
+    if (!$con->query($sql) === TRUE) {
+        die('Error updating patient records: ' . $con->error);
     }
 
     mysqli_close($con);
 }
 
-// Map the integer time storage in database to digital time
+// Map the integer time storage in database to digital time 
 function convertIntToTime($nextSlot) {
     $testSlotTime = "";
     switch ($nextSlot)

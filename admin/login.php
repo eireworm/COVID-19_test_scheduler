@@ -6,13 +6,14 @@ if (isset($_POST['email']) && isset($_POST['pswd']))
     $key = $ini_array["key"];
 
     // create and execute sql query to search for admin record
-    include '../db.inc.php'; 
+    include '../db.inc.php';
     $email = $con -> real_escape_string(substr($_POST['email'], 0, 64));
     $sql = "SELECT `adminID`, `name`, `password`, `iv` FROM `administrators` WHERE email=\"$email\";";
     $result = $con->query($sql);
     mysqli_close($con);
     
-    if ($result->num_rows > 0) {
+    if ($result->num_rows > 0) 
+    {
         $row = $result->fetch_assoc();
         $adminID = $row['adminID'];
         $adminName = hex2bin($row['name']);
@@ -25,6 +26,7 @@ if (isset($_POST['email']) && isset($_POST['pswd']))
             
             session_start();
             $_SESSION['adminName'] = openssl_decrypt($adminName, $cipher, $key, OPENSSL_RAW_DATA, $adminIV);
+            $_SESSION['adminID'] = $adminID;
             
             header("Location: ./dashboard.php"); 
             exit();
