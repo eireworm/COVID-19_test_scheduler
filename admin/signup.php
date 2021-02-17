@@ -4,31 +4,31 @@ $ini_array = parse_ini_file('C:\\config.ini');
 
 if (isset($_POST['name']) && isset($_POST['email']) && isset($_POST['pswd'])) 
 {
-  // hash password with max size of 64 characters
-  $hashed_pswd = password_hash(substr($_POST['pswd'], 0, 64), PASSWORD_DEFAULT);
+    // hash password with max size of 64 characters
+    $hashed_pswd = password_hash(substr($_POST['pswd'], 0, 64), PASSWORD_DEFAULT);
 
-  // Sanitise and encrypt medical administrator email address
-  $ini_array = parse_ini_file('C:\\config.ini');
-  $cipher = $ini_array["cipher"];
-  $key = $ini_array["key"];
-  $iv = random_bytes(16);
-  include '../db.inc.php'; 
-  $escaped_patient_name = $con -> real_escape_string($_POST['name']);
-  $encrypted_patient_name = openssl_encrypt($escaped_patient_name, $cipher, $key, OPENSSL_RAW_DATA, $iv);
+    // Sanitise and encrypt medical administrator email address
+    $ini_array = parse_ini_file('C:\\config.ini');
+    $cipher = $ini_array["cipher"];
+    $key = $ini_array["key"];
+    $iv = random_bytes(16);
+    include '../db.inc.php'; 
+    $escaped_patient_name = $con -> real_escape_string($_POST['name']);
+    $encrypted_patient_name = openssl_encrypt($escaped_patient_name, $cipher, $key, OPENSSL_RAW_DATA, $iv);
 
-  $escaped_email = $con -> real_escape_string($_POST['email']);
+    $escaped_email = $con -> real_escape_string($_POST['email']);
 
-  // create and execute sql query to insert new medical administrator
-  $sql = 'INSERT INTO `administrators` (`name`, `email`, `password`, `iv`)
-  VALUES ("' . bin2hex($encrypted_patient_name) . '", "' . $escaped_email . '", "' . bin2hex($hashed_pswd) . '", "' . bin2hex($iv) . '");';
+    // create and execute sql query to insert new medical administrator
+    $sql = 'INSERT INTO `administrators` (`name`, `email`, `password`, `iv`)
+    VALUES ("' . bin2hex($encrypted_patient_name) . '", "' . $escaped_email . '", "' . bin2hex($hashed_pswd) . '", "' . bin2hex($iv) . '");';
 
-  if (!$con->query($sql) === TRUE) {
-    die('<br>Error creating table: ' . $con->error);
-  }
-  mysqli_close($con);
+    if (!$con->query($sql) === TRUE) {
+        die('<br>Error creating table: ' . $con->error);
+    }
+    mysqli_close($con);
 
-  header("Location: ./login.php"); 
-  exit();
+    header("Location: ./login.php"); 
+    exit();
 }
 ?>
 <!DOCTYPE html>

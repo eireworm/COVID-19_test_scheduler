@@ -71,10 +71,9 @@ function addDateForTestRegistrations() {
     // Insert new past test reservation table entry
     $cipher = $ini_array["cipher"];
     $key = $ini_array["key"];
-    $iv = random_bytes(16);
 
-    $sql = "INSERT INTO PastTestResults (testSlotID, patientID, result, adminID, iv) 
-    VALUES ($testSlotID, $_SESSION[patientID], NULL, 'X', \"" . bin2hex($iv) . "\");";
+    $sql = "INSERT INTO PastTestResults (testSlotID, patientID, result, adminID) 
+    VALUES ($testSlotID, $_SESSION[patientID], NULL, 'X');";
     if (!$con->query($sql) === TRUE) {
         die('Error inserting new patient test reservation: ' . $con->error);
     }

@@ -14,7 +14,6 @@ CREATE TABLE IF NOT EXISTS `PastTestResults` (
   `patientID` INT NOT NULL,
   `result` VARCHAR(1),
   `adminID` INT,
-  `iv` VARCHAR(32),
   PRIMARY KEY (`patientID`, `testSlotID`)
 );
 

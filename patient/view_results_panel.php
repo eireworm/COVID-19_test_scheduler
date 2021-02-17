@@ -19,7 +19,7 @@
 <article id="table-container">
 <?php
 include '../db.inc.php'; 
-$sql = "SELECT testSlotID, result, iv FROM PastTestResults WHERE patientID=$_SESSION[patientID]";
+$sql = "SELECT testSlotID, result FROM PastTestResults WHERE patientID=$_SESSION[patientID]";
 $result = $con->query($sql);
 mysqli_close($con);
 
@@ -31,8 +31,6 @@ if ($result->num_rows > 0)
     while($row = $result->fetch_assoc()) {
         $testSlotID = $row['testSlotID'];
         $testResults = $row['result'];
-        $iv = hex2bin($row['iv']);
-        //$unencrypted_content = openssl_decrypt($content, $cipher, $key, OPENSSL_RAW_DATA, $iv);
 
         include '../db.inc.php'; 
         $sql = "SELECT Date, Time FROM TestSlot WHERE testSlotID=$testSlotID";
